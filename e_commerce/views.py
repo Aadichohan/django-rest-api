@@ -10,9 +10,9 @@ def index(request):
 
     # return render(request, "e_commerce/index.html")
     return Response( 
-        data = [data, data], 
-        status = 200, 
-        error = {'code': 300, 'message': 'Item Created Successfully'}, 
+        data    = [data, data], 
+        status  = 200, 
+        error   = {'code': 300, 'message': 'Item Created Successfully'}, 
         headers = {'X-Custom-Header': 'Item Created Successfully'}
     ).to_json()
     # return Response( 
