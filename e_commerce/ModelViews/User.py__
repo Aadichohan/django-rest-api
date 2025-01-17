@@ -1,0 +1,29 @@
+from django.urls import path
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from e_commerce.routes.routing import method_route
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_POST
+
+
+# Example views for GET and POST
+# @method_route('GET')
+# Handle GET request
+@csrf_protect
+@require_http_methods(["GET"])
+def my_api_get_view(request, *args, **kwargs):
+    print('method: ',request)
+    data = {"message": "This is a GET request."}
+    return JsonResponse(data)
+
+# @csrf_exempt
+# @method_route('POST')
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def my_api_post_view(request, *args, **kwargs):
+    print('method: ',request)
+    data = {"message": "This is a POST request.", "received_data": request.POST}
+    return JsonResponse(data)
+
+
