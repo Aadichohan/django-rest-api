@@ -22,10 +22,11 @@ class User(View):
     def put(self, request):
         data = {"message": "This is a PUT request."}
         return JsonResponse(data)
-    def all_user_data(request):
-        
-        return JsonResponse({"users": 'all users'})
     
+
+    def all_user_data(request):
+        return JsonResponse({"users": 'all users'})
+
 
     def single_user_data(request):
         return JsonResponse({"users": 'Single users'})
