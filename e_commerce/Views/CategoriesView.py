@@ -70,3 +70,30 @@ def addCategory(request):
         error   = {'message': 'Method Not Allowed'}, 
         headers = {}
     ).to_json()
+
+def updateCategory(request, id):
+    if request.method == 'PUT':
+
+        data           = json.loads(request.body)
+        category       = get_object_or_404(Categories, pk=id)
+        title          = data.get('title')
+        desc           = data.get('desc')
+        if title:
+            category.title = title
+        if desc:
+            category.desc = desc
+        category.save()
+        return Response( 
+            data    = [{'id':category.id, 'title':category.title, "desc": category.desc}], 
+            status  = 201, 
+            error   = {}, 
+            response = {'response': 'Category Updated'},
+            headers = {}
+        ).to_json()
+
+    return Response( 
+        data    = [], 
+        status  = 404, 
+        error   = {'message': 'Method Not Allowed'}, 
+        headers = {}
+    ).to_json()

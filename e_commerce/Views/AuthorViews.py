@@ -1,5 +1,5 @@
 import json
-
+from django.shortcuts import render, get_object_or_404
 from ..models import  Author
 from ..response import Response
 
@@ -63,6 +63,37 @@ def addAuthor(request):
             data    = [{"author_id": author.id, "name": author.name, "last_name": author.last_name, "age": author.age, "created_date": author.created_at}], 
             status  = 200, 
             error   = {}, 
+            headers = {}
+        ).to_json()
+
+    return Response( 
+        data    = [], 
+        status  = 404, 
+        error   = {'message': 'Method Not Allowed'}, 
+        headers = {}
+    ).to_json()
+
+def updateAuthor(request, id):
+    if request.method == 'PUT':
+
+        data           = json.loads(request.body)
+        author         = get_object_or_404(Author, pk=id)
+        name           = data.get('name')
+        last_name      = data.get('last_name')
+        age            = data.get('age')
+        if name:
+            author.name = name
+        if last_name:
+            author.last_name = last_name
+        if age:
+            author.age = age
+
+        author.save()
+        return Response( 
+            data    = [{'id':author.id, 'name':author.name, "last_name": author.last_name, "age": author.age}], 
+            status  = 201, 
+            error   = {}, 
+            response = {'response': 'Author Updated'},
             headers = {}
         ).to_json()
 
