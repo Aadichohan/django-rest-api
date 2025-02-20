@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('e_commerce.urls')),
     path('class_based_ecomm/', include('class_based_ecomm.urls')),
+    path('class_based_ecomm_form/', include('class_based_ecomm_form.urls')),
 ]
