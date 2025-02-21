@@ -1,5 +1,6 @@
 
 from rest_framework.views import APIView
+from rest_framework import status
 
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
@@ -23,7 +24,7 @@ class BookView(View):
                 # return DRFResponse(book_serializer.data)
                 return EcommerceResponse(
                     data    = [book_serializer.data], 
-                    status  = 200, 
+                    status  = status.HTTP_200_OK, 
                     error   = {}, 
                     headers = {}
                 ).to_json()
@@ -32,7 +33,7 @@ class BookView(View):
             book_serializer = BookSerializer(books, many=True)
             return EcommerceResponse( 
                 data    = book_serializer.data, 
-                status  = 200, 
+                status  = status.HTTP_200_OK, 
                 error   = {}, 
                 headers = {}
             ).to_json()
@@ -40,7 +41,7 @@ class BookView(View):
         except json.JSONDecodeError as e:
             return EcommerceResponse(
                 data    = {}, 
-                status  = 400, 
+                status  = status.HTTP_400_BAD_REQUEST, 
                 error   = {'error': str(e)}, 
                 headers = {}
             ).to_json()
