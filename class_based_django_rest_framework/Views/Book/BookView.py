@@ -42,6 +42,6 @@ class BookView(View):
             return EcommerceResponse(
                 data    = {}, 
                 status  = status.HTTP_400_BAD_REQUEST, 
-                error   = {'error': str(e)}, 
+                error   = {'message': str(e)}, 
                 headers = {}
             ).to_json()
