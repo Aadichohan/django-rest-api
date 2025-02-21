@@ -5,4 +5,5 @@ from e_commerce.ModelViews.User import User
 
 urlpatterns = [
      path('books/', view=BookView.as_view(), name='book-list'),
+     path('books/<int:book_id>/', BookView.as_view(), name='book-detail')
 ]

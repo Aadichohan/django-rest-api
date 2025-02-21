@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from django.views import View
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from e_commerce.response import Response
+from e_commerce.response import Response as EcommerceResponse
 # from class_based_ecomm.models import Book, Author, Categories
 from e_commerce.models import Book, Author, Categories
 # Create your views here.
@@ -16,12 +16,26 @@ class BookView(View):
     #     books = Book.objects.all()
     #     return render(request, self.template_name, {'books': books})
 
-    def get(self, request):
+    def get(self, request, book_id=None):
+
+        if book_id:
+            # book = Book.objects.get(id=book_id)
+            book = get_object_or_404(Book, pk=book_id)
+            books_data = {"id":book.id, "title": book.title, "author": book.author_id, "category": book.category_id, "desc": book.desc, "published_date":book.published_date} 
+            # book_serializer = BookSerializer(book)
+            # return DRFResponse(book_serializer.data)
+            return EcommerceResponse(
+                data    = [books_data], 
+                status  = 200, 
+                error   = {}, 
+                headers = {}
+            ).to_json()
+        
         books = Book.objects.all()
         books_data = [{"id":book.id, "title": book.title, "author": book.author_id, "category": book.category_id, "desc": book.desc, "published_date":book.published_date} for book in books]
         # return JsonResponse(books_data, safe=False)
-        return Response( 
-            data    = [], 
+        return EcommerceResponse( 
+            data    = [books_data], 
             status  = 200, 
             error   = {}, 
             headers = {}
@@ -35,7 +49,7 @@ class BookView(View):
             book_id = request.POST.get("delete")
             book = get_object_or_404(Book, id=book_id)
             book.delete()
-            return Response( 
+            return EcommerceResponse( 
                 data    = [], 
                 status  = 200, 
                 error   = {}, 
@@ -55,7 +69,7 @@ class BookView(View):
 
             # Validate required fields
             if not title or not author or not category:
-                return Response( 
+                return EcommerceResponse( 
                     data    = [], 
                     status  = 400, 
                     error   = {'message': 'All fields are required'}, 
@@ -72,7 +86,7 @@ class BookView(View):
                 desc = desc,
                 published_date= published_date
             )
-            return Response( 
+            return EcommerceResponse( 
                     data    = [{'id': book.id, 'title': book.title}], 
                     status  = 201, 
                     error   = {}, 
@@ -81,7 +95,7 @@ class BookView(View):
                 ).to_json()
             # return JsonResponse({'message': 'Book created successfully', 'book': {'id': book.id, 'title': book.title}}, status=201)
         except json.JSONDecodeError:
-             return Response( 
+             return EcommerceResponse( 
                     data    = [], 
                     status  = 400, 
                     error   = {'message': 'Invalid JSON format'}, 
@@ -139,7 +153,7 @@ class BookView(View):
             if form.is_valid():
                 form.save()
                 # Return a JSON response confirming the update
-                return Response( 
+                return EcommerceResponse( 
                     data    = [], 
                     status  = 204, 
                     error   = {}, 
@@ -150,7 +164,7 @@ class BookView(View):
         
             # Return errors as JSON if form is invalid
             # return JsonResponse({"success": False, "errors": form.errors}, status=400)
-            return Response( 
+            return EcommerceResponse( 
                     data    = [], 
                     status  = 204, 
                     error   = {'message': form.errors}, 
@@ -159,7 +173,7 @@ class BookView(View):
                 ).to_json()
 
         except json.JSONDecodeError:
-             return Response( 
+             return EcommerceResponse( 
                     data    = [], 
                     status  = 400, 
                     error   = {'message': 'Invalid JSON format'}, 
@@ -174,7 +188,7 @@ class BookView(View):
             book = get_object_or_404(Book, id=book_id)
             book.delete()
             # Return a JSON response confirming the deletion
-            return Response( 
+            return EcommerceResponse( 
                     data    = [], 
                     status  = 204, 
                     error   = {}, 
@@ -183,7 +197,7 @@ class BookView(View):
                 ).to_json()
         
         except json.JSONDecodeError:
-             return Response( 
+             return EcommerceResponse( 
                     data    = [], 
                     status  = 400, 
                     error   = {'message': 'Invalid JSON format'}, 
@@ -200,7 +214,7 @@ class BookView(View):
             desc           = data.get("desc")
             published_date = data.get("published_date")
             if not book_id:
-                return Response( 
+                return EcommerceResponse( 
                     data    = [], 
                     status  = 204, 
                     error   = {"message": "Book ID is required"}, 
@@ -237,7 +251,7 @@ class BookView(View):
             # Save the partially updated Book instance
             book.save()
             # Return a JSON response confirming the partial update
-            return Response( 
+            return EcommerceResponse( 
                     data    = [], 
                     status  = 204, 
                     error   = {}, 
@@ -249,7 +263,7 @@ class BookView(View):
             # return JsonResponse({"success": False, "errors": form.errors}, status=400)
 
         except json.JSONDecodeError:
-             return Response( 
+             return EcommerceResponse( 
                     data    = [], 
                     status  = 400, 
                     error   = {'message': 'Invalid JSON format'}, 

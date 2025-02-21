@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'e_commerce',
     'class_based_ecomm',
     'class_based_ecomm_form',
+    'rest_framework',
+    'class_based_django_rest_framework',
 ]
 
 MIDDLEWARE = [

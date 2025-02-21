@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('e_commerce.urls')),
     path('class_based_ecomm/', include('class_based_ecomm.urls')),
     path('class_based_ecomm_form/', include('class_based_ecomm_form.urls')),
+    path('class_based_rest_framework/', include('class_based_django_rest_framework.urls')),
 ]
