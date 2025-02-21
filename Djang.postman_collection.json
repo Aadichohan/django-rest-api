@@ -539,11 +539,23 @@
 					"item": [
 						{
 							"name": "getBooks",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "http://localhost:8000/class_based_ecomm/books/",
+									"raw": "http://localhost:8000/class_based_ecomm/books/8",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -552,7 +564,7 @@
 									"path": [
 										"class_based_ecomm",
 										"books",
-										""
+										"8"
 									]
 								}
 							},
@@ -944,7 +956,7 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "http://localhost:8000/class_based_rest_framework/books-view-rest/?czxcz=xzcz",
+									"raw": "http://localhost:8000/class_based_rest_framework/books-view-rest/",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -954,12 +966,6 @@
 										"class_based_rest_framework",
 										"books-view-rest",
 										""
-									],
-									"query": [
-										{
-											"key": "czxcz",
-											"value": "xzcz"
-										}
 									]
 								}
 							},
