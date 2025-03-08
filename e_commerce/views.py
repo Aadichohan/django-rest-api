@@ -40,25 +40,25 @@ def index(request):
     # return HttpResponse( "e_commerce/index.html")
 
 
-def add_author(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        name = data.get('name')
-        last_name = data.get('last_name')
-        age = data.get('age')
+# def add_author(request):
+#     if request.method == 'POST':
+#         data = json.loads(request.body)
+#         name = data.get('name')
+#         last_name = data.get('last_name')
+#         age = data.get('age')
 
-        author = Author.objects.create(
-            name = name,
-            last_name = last_name,
-            age = age
-        )
-        print(author)
-        return Response( 
-            data    = list({"author_id": author.id, "name": author.name, "last_name": author.last_name, "age": author.age, "created_date": author.created_at}), 
-            status  = 200, 
-            error   = {}, 
-            headers = {}
-        ).to_json()
+#         author = Author.objects.create(
+#             name = name,
+#             last_name = last_name,
+#             age = age
+#         )
+#         print(author)
+#         return Response( 
+#             data    = list({"author_id": author.id, "name": author.name, "last_name": author.last_name, "age": author.age, "created_date": author.created_at}), 
+#             status  = 200, 
+#             error   = {}, 
+#             headers = {}
+#         ).to_json()
 
 def get_book_list(request):
     if request.method == 'GET':
