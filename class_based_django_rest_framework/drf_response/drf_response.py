@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 
 class DRFResponse():
-    def __init__(self, data, status=200, error=None, response = {}, headers=None):
+    def __init__(self, data=None, status=200, error=None, response = {}, headers=None):
         self.data = data
         self.status = status
         self.error = error
@@ -9,7 +9,9 @@ class DRFResponse():
         self.headers = headers
 
     def to_json(self):
-        response_data = {"data": self.data}
+        if self.data:
+            response_data = {"data": self.data}
+        else: response_data = {}
         if self.response:
             response_data["response"] = self.response  
         if self.error:
